@@ -26,7 +26,7 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.build(post_params)
 
     respond_to do |format|
       if @post.save
@@ -69,8 +69,15 @@ class PostsController < ApplicationController
       @post = Post.find(params[:id])
     end
 
+    # def upload
+    #   upload_to = post_params[:image]
+    #   File.open(Rails.root.join('public', 'posts', uploaded_io.original_filename), 'wb') do |file|
+    #     file.write(uploaded_io.read)
+    #   end
+    # end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:description)
+      params.require(:post).permit(:description, :image)
     end
 end

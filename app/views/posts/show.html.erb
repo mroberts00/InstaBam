@@ -9,13 +9,22 @@
       <%= @user.username %> 
     </span>
     <span>
-      Follow
+        <%= form_for Follow.new(followed_id: @post.user_id) do |f| %>
+        <%= f.hidden_field :followed_id %>
+        <%= hidden_field_tag "follow[post_id]", @post.id %>
+        <%= f.submit 'Follow' %>
+      <% end %>
     </span>
   </div>
   <div class='body'>
-    <%= image_path 'valleytopeak.jpg' %>
-    <%= image_tag 'valleytopeak.jpg' %>
-    Image
+    <% if @post.image? %>
+      <%= image_tag @post.image.url %>
+    <% end %>
+    <%# hand rolled %>
+    <%# if post.image.file_name %>
+      <%#= image_tag "/posts/#{@post.image.file_name}" %>
+      <%# end%> 
+      
   </div>
   <div>
     <span><%= @post.likes.size %> likes</span>
